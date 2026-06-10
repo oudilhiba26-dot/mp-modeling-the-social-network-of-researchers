@@ -1,0 +1,86 @@
+================================================================================
+RAPPORT DE RÉSILIENCE RÉSEAU - PHASE 2
+================================================================================
+
+1. MÉTRIQUES INITIALES DU RÉSEAU (AVANT ATTAQUE)
+--------------------------------------------------------------------------------
+  Nombre de nœuds         : 135
+  Nombre d'arêtes         : 1408
+  Densité                 : 0.1557
+  Taille GCC              : 64 (47.4%)
+  Nombre de composantes   : 16
+  Diamètre (GCC)          : 3
+
+2. RÉSULTATS DÉTAILLÉS PAR STRATÉGIE D'ATTAQUE
+--------------------------------------------------------------------------------
+
+
+[RANDOM_ATTACK]
+Suppression     GCC        Composantes     Diamètre     Densité   
+-----------------------------------------------------------------
+0%            64         16              3.0          0.1557    
+1%            64         16              3.0          0.1577    
+5%            60         16              3.0          0.1576    
+10%            53         16              3.0          0.1457    
+20%            40         16              3.0          0.1348     <-- TIPPING POINT
+30%            15         17              1.0          0.1206    
+40%            0          0               ∞            0.0000    
+50%            0          0               ∞            0.0000    
+
+  ⚠ Point de bascule détecté : 20% de suppression
+
+
+[DEGREE_ATTACK]
+Suppression     GCC        Composantes     Diamètre     Densité   
+-----------------------------------------------------------------
+0%            64         16              3.0          0.1557    
+1%            63         16              3.0          0.1516    
+5%            41         17              1.0          0.1329     <-- TIPPING POINT
+10%            28         17              1.0          0.0973    
+20%            16         17              2.0          0.0679    
+30%            5          14              1.0          0.0585    
+40%            0          0               ∞            0.0000    
+50%            0          0               ∞            0.0000    
+
+  ⚠ Point de bascule détecté : 5% de suppression
+
+
+[BETWEENNESS_ATTACK]
+Suppression     GCC        Composantes     Diamètre     Densité   
+-----------------------------------------------------------------
+0%            64         16              3.0          0.1557    
+1%            63         16              3.0          0.1516    
+5%            46         18              1.0          0.1538     <-- TIPPING POINT
+10%            46         16              1.0          0.1840    
+20%            45         13              1.0          0.2759    
+30%            6          13              1.0          0.0674    
+40%            0          0               ∞            0.0000    
+50%            0          0               ∞            0.0000    
+
+  ⚠ Point de bascule détecté : 5% de suppression
+
+
+================================================================================
+3. ANALYSE COMPARATIVE
+--------------------------------------------------------------------------------
+
+État du réseau à suppression maximale (avant disparition complète) :
+Stratégie                 GCC        Composantes     Densité   
+------------------------------------------------------------
+random_attack             0          0               0.0000    
+degree_attack             0          0               0.0000    
+betweenness_attack        0          0               0.0000    
+
+================================================================================
+4. CONCLUSION
+--------------------------------------------------------------------------------
+
+Stratégie la plus dévastatrice : RANDOM_ATTACK
+
+  Analyse : L'attaque aléatoire pose une menace homogène au réseau.
+  Bien que moins ciblée que les autres stratégies, elle montre la
+  robustesse globale du réseau face à des défaillances non-structurées.
+
+================================================================================
+Rapport généré le : 2026-06-10 14:37:04
+================================================================================

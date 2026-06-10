@@ -1,0 +1,28 @@
+======================================================================
+RAPPORT PRÉDICTIF ET CARTOGRAPHIE DU RÉSEAU FUTUR (PHASE 3)
+======================================================================
+
+1. ANALYSE DE PRÉDICTION DE LIENS (LINK PREDICTION)
+--------------------------------------------------
+  - adamic_adar               : AUC-ROC = 1.0000
+  - jaccard                   : AUC-ROC = 1.0000
+  - preferential_attachment   : AUC-ROC = 0.7749
+
+Algorithme le plus performant : adamic_adar
+
+Top 5 des liaisons de rechange recommandées :
+  • Wang X. <--> Akhtar M. (Score=736.0000, Via=preferential_attachment)
+  • Wang X. <--> Batzner J. (Score=736.0000, Via=preferential_attachment)
+  • Wang X. <--> Biderman S. (Score=736.0000, Via=preferential_attachment)
+  • Wang X. <--> Chim J. (Score=736.0000, Via=preferential_attachment)
+  • Wang X. <--> Choshen L. (Score=736.0000, Via=preferential_attachment)
+
+2. MODÉLISATION DE LA VULNÉRABILITÉ (MACHINE LEARNING)
+--------------------------------------------------
+  - Classifieur optimal de transition : Gradient Boosting
+  - Score d'évaluation du modèle (AUC) : 0.8532
+
+3. SYNTHÈSE DU RÉSEAU FUTUR SIMULÉ
+--------------------------------------------------
+  - Nombre total de leaders émergents détectés : 77
+  - Liste des profils résilients : Tao K., Zhou J., Wang T., Wen Z., Zhang Z., Beigi M., Huang L., Jin M., Bullwinkel B., Kim E.
