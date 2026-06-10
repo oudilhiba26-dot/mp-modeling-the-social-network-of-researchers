@@ -33,6 +33,9 @@ The backend has been restructured and documented following **academic best pract
 **Key Sections**:
 - Module descriptions with their purposes
 - Sequential execution flow (Phase 1 → Phase 2 → Phase 3)
+  - Phase 1: Data Preparation & Visualization
+  - Phase 2: Network Resilience & Stress Simulation
+  - Phase 3: Link Prediction & Machine Learning
 - Quick start instructions
 - Contact and support information
 
@@ -73,43 +76,7 @@ The backend has been restructured and documented following **academic best pract
 
 ---
 
-### 3. **Phase 2: Link Prediction & Machine Learning**
-📄 `backend/link_predictionML/README.md` *(~9KB)*
-
-**Purpose**: Guide for predicting future researcher collaborations using ML
-
-**Contents**:
-
-#### Machine Learning Approach
-- Feature engineering methodology
-- Implemented ML algorithms
-  - Logistic Regression
-  - Random Forest
-  - Gradient Boosting
-  - Neural Networks
-- Model validation and evaluation metrics
-
-#### Output Files Documented
-
-| Output File | Purpose | Format |
-|------------|---------|--------|
-| `link_predictions.csv` | Predicted future collaborations | CSV with scores |
-| `vulnerability_scores.csv` | Prediction confidence metrics | CSV |
-| `feature_importance.csv` | Feature ranking analysis | CSV |
-| `reseau_futur.html` | Predicted network visualization | HTML |
-| `predictive_report.txt` | Comprehensive analysis report | Text |
-
-#### Advanced Topics
-- Use cases (collaboration opportunities, network evolution)
-- Parameter tuning options
-- Custom feature engineering
-- Troubleshooting guide
-- Performance considerations
-- Academic references
-
----
-
-### 4. **Phase 3: Network Resilience & Stress Simulation**
+### 3. **Phase 2: Network Resilience & Stress Simulation**
 📄 `backend/simulateur_stress/README.md` *(~12KB)*
 
 **Purpose**: Assessment of network resilience through degradation simulation
@@ -153,6 +120,42 @@ The backend has been restructured and documented following **academic best pract
 
 ---
 
+### 4. **Phase 3: Link Prediction & Machine Learning**
+📄 `backend/link_predictionML/README.md` *(~9KB)*
+
+**Purpose**: Guide for predicting future researcher collaborations using ML
+
+**Contents**:
+
+#### Machine Learning Approach
+- Feature engineering methodology
+- Implemented ML algorithms
+  - Logistic Regression
+  - Random Forest
+  - Gradient Boosting
+  - Neural Networks
+- Model validation and evaluation metrics
+
+#### Output Files Documented
+
+| Output File | Purpose | Format |
+|------------|---------|--------|
+| `link_predictions.csv` | Predicted future collaborations | CSV with scores |
+| `vulnerability_scores.csv` | Prediction confidence metrics | CSV |
+| `feature_importance.csv` | Feature ranking analysis | CSV |
+| `reseau_futur.html` | Predicted network visualization | HTML |
+| `predictive_report.txt` | Comprehensive analysis report | Text |
+
+#### Advanced Topics
+- Use cases (collaboration opportunities, network evolution)
+- Parameter tuning options
+- Custom feature engineering
+- Troubleshooting guide
+- Performance considerations
+- Academic references
+
+---
+
 ## Academic Structure Features
 
 ### ✅ Comprehensive Organization
@@ -161,18 +164,19 @@ The backend has been restructured and documented following **academic best pract
 backend/
 ├── README.md                          # Main overview
 ├── data_prep_vis/
-│   ├── README.md                     # Phase 1 detailed guide
+│   ├── README.md                     # Phase 1: Data Preparation & Visualization
 │   ├── [Python scripts]
 │   ├── requirements.txt
 │   └── lib/                          # External libraries
-├── link_predictionML/
-│   ├── README.md                     # Phase 2 detailed guide
+├── simulateur_stress/
+│   ├── README.md                     # Phase 2: Network Resilience & Stress Simulation
 │   ├── [Python scripts]
-│   ├── requirements.txt
-│   └── lib/                          # External libraries
-└── simulateur_stress/
-    ├── README.md                     # Phase 3 detailed guide
-    └── [Python scripts]
+│   └── requirements.txt
+└── link_predictionML/
+    ├── README.md                     # Phase 3: Link Prediction & Machine Learning
+    ├── [Python scripts]
+    ├── requirements.txt
+    └── lib/                          # External libraries
 ```
 
 ### ✅ Documentation Standards
@@ -192,12 +196,17 @@ Each README includes:
 
 ### ✅ Content Quality Metrics
 
+**Execution Order** (Important for dependencies):
+1. **Phase 1**: Data Preparation & Visualization (generates base network)
+2. **Phase 2**: Network Resilience & Stress Simulation (analyzes network stability)
+3. **Phase 3**: Link Prediction & Machine Learning (uses Phase 1 & 2 insights)
+
 | Module | File Size | Lines | Tables | Code Examples | References |
 |--------|-----------|-------|--------|---------------|------------|
 | Main Backend | ~7 KB | ~290 | 3+ | 5+ | 3 |
-| Phase 1 | ~35 KB | ~1,300+ | 10+ | 20+ | 8+ |
-| Phase 2 | ~9 KB | ~350 | 5+ | 10+ | 5+ |
-| Phase 3 | ~12 KB | ~450 | 8+ | 12+ | 6+ |
+| Phase 1 (Data Prep) | ~35 KB | ~1,300+ | 10+ | 20+ | 8+ |
+| Phase 2 (Resilience) | ~12 KB | ~450 | 8+ | 12+ | 6+ |
+| Phase 3 (Link Pred) | ~9 KB | ~350 | 5+ | 10+ | 5+ |
 | **TOTAL** | **~63 KB** | **~2,400+** | **25+** | **45+** | **22+** |
 
 ---
@@ -236,21 +245,20 @@ Each README includes:
 ✅ Troubleshooting solutions for common issues  
 ✅ Academic references to network science papers  
 
-### Phase 2 (Link Prediction)
-✅ Machine learning methodology explained  
-✅ Feature engineering techniques documented  
-✅ 4+ ML algorithms detailed  
-✅ Model evaluation metrics defined  
-✅ Use cases and applications listed  
-✅ Advanced customization options  
-
-### Phase 3 (Resilience Simulation)
+### Phase 2 (Resilience Simulation)
 ✅ 3 degradation strategies explained  
 ✅ 10+ metrics calculated and defined  
 ✅ Interpretation guide for results  
 ✅ Risk management applications  
 ✅ Performance benchmarks  
 ✅ Research foundation papers cited  
+
+### Phase 3 (Link Prediction)
+✅ Feature engineering techniques documented  
+✅ 4+ ML algorithms detailed  
+✅ Model evaluation metrics defined  
+✅ Use cases and applications listed  
+✅ Advanced customization options  
 
 ---
 
@@ -259,8 +267,8 @@ Each README includes:
 ### For New Users
 1. Start with `backend/README.md` for overview
 2. Read Phase 1 README before executing data collection
-3. Follow Phase 2 README for ML analysis
-4. Consult Phase 3 README for resilience testing
+3. Follow Phase 2 README for resilience simulation
+4. Consult Phase 3 README for link prediction analysis
 
 ### For Developers
 1. Check module-specific README for customization
