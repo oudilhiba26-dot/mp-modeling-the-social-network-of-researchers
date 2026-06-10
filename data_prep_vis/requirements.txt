@@ -1,0 +1,57 @@
+# ===========================================================================
+# Requirements pour data_prep_vis
+# Pipeline de préparation et analyse de données de réseaux sociaux académiques
+# ===========================================================================
+
+# Dépendances principales (versions minimales recommandées)
+# =========================================
+
+# Manipulation et analyse de données
+pandas>=1.3.0
+numpy>=1.21.0
+
+# Structures et algorithmes de graphes
+networkx>=2.6.0
+
+# Détection de communautés (REQUIS pour clusters.py)
+python-louvain>=0.15.0
+
+# Collecte de données ArXiv
+arxiv>=2.0.0
+
+# Visualisation interactive des graphes
+pyvis>=0.3.0
+
+# Visualisation avancée (graphiques interactifs)
+plotly>=5.0.0
+
+# ===========================================================================
+# Dépendances pour les tests
+# ===========================================================================
+
+pytest>=6.2.0
+pytest-cov>=2.12.0
+
+# ===========================================================================
+# Dépendances optionnelles (pour développement)
+# ===========================================================================
+
+# Linting et formatage du code
+pylint>=2.9.0
+black>=21.0
+flake8>=3.9.0
+
+# Vérification de types
+mypy>=0.910
+
+# Documentation
+sphinx>=4.0.0
+sphinx-rtd-theme>=1.0.0
+
+# ===========================================================================
+# Notes sur les versions:
+# =========================================================================
+# - Toutes les versions sont testées avec Python 3.8+
+# - Pour Python 3.9+, les versions peuvent être plus récentes
+# - numpy 2.0+ peut causer des incompatibilités avec certains packages
+# ===========================================================================

@@ -7,7 +7,7 @@ client = arxiv.Client()
 # Use 'ti' for title, 'au' for author, or 'cat' for category
 search = arxiv.Search(
     query = "cat:cs.AI", # This searches for Artificial Intelligence papers
-    max_results = 500,  # Number of articles to collect (increased for big dataset)
+    max_results = 20,  # Number of articles to collect (increased for big dataset)
     sort_by = arxiv.SortCriterion.SubmittedDate
 )
 
