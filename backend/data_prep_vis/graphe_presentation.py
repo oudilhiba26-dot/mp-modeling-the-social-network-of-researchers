@@ -9,7 +9,6 @@ import math
 df_edges = pd.read_csv('cleaned_researcher_network_edgelist.csv')
 df_nodes = pd.read_csv('metrics_with_clusters.csv')
 
-# Trouver la star du réseau
 top_researcher = df_nodes.loc[df_nodes['pagerank'].idxmax(), 'researcher']
 
 # ==========================================
@@ -24,66 +23,56 @@ G = nx.from_pandas_edgelist(
 )
 
 # ==========================================
-# 3. PALETTE DE COULEURS INFINIE (GÉNÉRATEUR HSL)
+# 3. PALETTE DE COULEURS INFINIE (HSL)
 # ==========================================
 classes_uniques = list(df_nodes['classe'].unique())
 num_classes = len(classes_uniques)
 
 color_map = {}
 for i, cls in enumerate(classes_uniques):
-    # On divise le cercle chromatique (360 degrés) équitablement par le nombre de classes
     hue = int((i * 360) / num_classes) if num_classes > 0 else 0
-    # Saturation à 75% et Luminosité à 50% pour des couleurs vives sur fond sombre
     color_map[cls] = f"hsl({hue}, 75%, 50%)"
 
 # ==========================================
-# 4. NORMALISATION AMPLIFIÉE DES TAILLES (Min-Max + Puissance)
+# 4. NORMALISATION AMPLIFIÉE DES TAILLES
 # ==========================================
-# Définir les bornes de tailles souhaitées dans l'interface Pyvis
 MIN_NODE_SIZE = 12
 MAX_NODE_SIZE = 70
 
-# On récupère les valeurs min et max réelles du PageRank pour calibrer l'échelle
 pr_min = df_nodes['pagerank'].min()
 pr_max = df_nodes['pagerank'].max()
 
 def obtenir_taille_accentuee(pr_val):
-    """ Calcule une taille fortement contrastée grâce à une échelle de puissance """
     if pr_max == pr_min:
         return MIN_NODE_SIZE
-    
-    # 1. Normalisation linéaire entre 0 et 1
     linear_norm = (pr_val - pr_min) / (pr_max - pr_min)
-    
-    # 2. Application d'une puissance (ex: au carré ou cube) 
-    # Cela écrase les petites valeurs et fait exploser les valeurs dominantes
-    accentuated_norm = math.pow(linear_norm, 2)  # Changez le '2' en '3' pour encore plus de contraste
-    
-    # 3. Projection sur notre plage de tailles Pyvis (MIN_NODE_SIZE à MAX_NODE_SIZE)
+    accentuated_norm = math.pow(linear_norm, 2)
     return MIN_NODE_SIZE + (accentuated_norm * (MAX_NODE_SIZE - MIN_NODE_SIZE))
 
 # ==========================================
-# 5. INITIALISATION ET INJECTION PYVIS
+# 5. INITIALISATION PYVIS
 # ==========================================
-net = Network(height="750px", width="100%", bgcolor="#100f0fff", font_color="white")
+net = Network(height="700px", width="100%", bgcolor="#100f0f", font_color="white")
+
+# On active le filtre physics
+net.show_buttons(filter_=['physics'])
+
 net.from_nx(G)
 
+# ==========================================
+# 6. INJECTION DES DONNÉES VISUELLES
+# ==========================================
 nodes_dict = df_nodes.set_index('researcher').to_dict('index')
 
 for node in net.nodes:
     node_name = node['id']
-    
     if node_name in nodes_dict:
         metrics = nodes_dict[node_name]
         node_class = metrics['classe']
         
-        # A. Couleur HSL dynamique unique
         node['color'] = color_map[node_class]
-        
-        # B. Taille fortement accentuée
         node['size'] = obtenir_taille_accentuee(metrics['pagerank'])
         
-        # C. Infobulle au survol
         is_top_str = " 👑 (PLUS INFLUENT)" if node_name == top_researcher else ""
         node['title'] = (
             f"<b>Chercheur :</b> {node_name}{is_top_str}<br>"
@@ -91,30 +80,59 @@ for node in net.nodes:
             f"<b>PageRank :</b> {metrics['pagerank']:.6f}"
         )
         
-        # D. Traitement spécial pour le leader (Mise en valeur extrême)
         if node_name == top_researcher:
             node['label'] = f"⭐ {node_name} ⭐"
             node['borderWidth'] = 5
             node['borderColor'] = "#ffffff"
-            node['size'] = MAX_NODE_SIZE + 15  # Forcer le leader à dépasser le plafond maximum
+            node['size'] = MAX_NODE_SIZE + 15
 
 # ==========================================
-# 6. CONFIGURATION PHYSIQUE DU RENDU
+# 7. FORCE DU STYLE CSS POUR RENDRE LE PANNEAU VISIBLE
 # ==========================================
 net.toggle_physics(True)
-
-# Important : On ajuste la physique pour éviter que les très gros nœuds ne chevauchent les petits
 net.barnes_hut(
-    gravity=-12000,          # Répulsion plus forte pour espacer les nœuds
+    gravity=-12000,
     central_gravity=0.2, 
-    spring_length=120,        # Ressorts légèrement plus longs pour aérer le graphe
+    spring_length=120,
     spring_strength=0.04
 )
 
+# Génération temporaire du HTML en mémoire pour modifier son CSS
+html_filename = "reseau_dynamique.html"
+net.save_graph(html_filename)
 
-# CETTE LIGNE AJOUTE LE PANNEAU DE CONFIGURATION SUR L'INTERFACE INTERACTIVE
-# On cible spécifiquement la section "physics" pour permettre d'activer/désactiver le mouvement
-net.show_buttons(filter_=['physics'])
+# --- Injection CSS Magique ---
+# Nous allons lire le fichier généré et forcer le panneau d'options à s'afficher 
+# proprement en bas avec un texte noir très lisible et un fond gris clair.
+with open(html_filename, 'r', encoding='utf-8') as file:
+    html_content = file.read()
 
-# Génération du fichier
-net.show("reseau_dynamique.html", notebook=False)
+# CSS personnalisé pour écraser le conflit de couleur de Pyvis
+custom_css = """
+<style>
+    /* Force le conteneur des boutons à avoir un fond gris clair et du texte noir */
+    #config {
+        background-color: #f4f6f9 !important;
+        color: #333333 !important;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    /* Force les textes des labels à être noirs et bien visibles */
+    .vis-configuration-wrapper, .vis-config-item, .vis-config-label {
+        color: #111111 !important;
+        font-weight: bold !important;
+    }
+</style>
+</head>
+"""
+
+# On insère notre CSS juste avant la fin de la balise </head>
+html_content = html_content.replace("</head>", custom_css)
+
+# Réécriture du fichier corrigé
+with open(html_filename, 'w', encoding='utf-8') as file:
+    file.write(html_content)
+
+print(f"Fichier '{html_filename}' généré avec un panneau de contrôle de la physique hautement visible !")
