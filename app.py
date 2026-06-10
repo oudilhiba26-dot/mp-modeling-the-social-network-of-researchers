@@ -29,9 +29,16 @@ et d'analyser sa résilience.
 
 st.sidebar.header("⚙️ Paramètres")
 
-theme = st.sidebar.text_input(
-    "🔍 Sujet de recherche",
-    "Artificial Intelligence"
+theme = st.sidebar.selectbox(
+    "Thème de recherche",
+    [
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Deep Learning",
+        "Computer Vision",
+        "Natural Language Processing",
+        "Robotics"
+    ]
 )
 
 attack_type = st.sidebar.selectbox(
