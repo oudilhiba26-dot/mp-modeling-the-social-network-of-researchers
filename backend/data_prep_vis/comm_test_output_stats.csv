@@ -1,2 +1,0 @@
-num_communities,avg_community_size,largest_community,smallest_community,modularity,method
-2,4.0,4,4,0.4900990099009901,louvain
