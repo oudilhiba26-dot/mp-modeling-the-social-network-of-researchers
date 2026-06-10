@@ -1,6 +1,6 @@
 # Network Resilience & Stress Simulation
 
-**Module**: Phase 3 of the Researcher Network Analysis Pipeline  
+**Module**: Phase 2 of the Researcher Network Analysis Pipeline  
 **Purpose**: Assess network resilience through degradation simulation and stress testing
 
 ---
@@ -28,12 +28,14 @@ simulateur_stress/
 
 ### Input Data Requirements
 
-This module depends on outputs from **Phase 1 & 2**:
+This module depends on outputs from **Phase 1** only:
 
 **Required Input Files**:
 1. `cleaned_researcher_network_edgelist.csv` - Network structure from data_prep_vis
 2. `metrics_with_clusters.csv` - Researcher metrics and communities
-3. `link_predictions.csv` - Predicted links (optional, for future network scenarios)
+
+**Optional Input Files**:
+- `link_predictions.csv` - Predicted links (for future network scenario analysis, generated in Phase 3)
 
 **File Format Example** (Edge List):
 ```csv

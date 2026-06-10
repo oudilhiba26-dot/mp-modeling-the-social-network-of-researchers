@@ -8,13 +8,13 @@ This backend repository implements a comprehensive analysis pipeline for modelin
 
 ## Project Structure
 
-The backend is organized into three independent but complementary modules:
+The backend is organized into three sequential modules that must be executed in order:
 
 ```
 backend/
 ├── 1-data_prep_vis/           # Phase 1: Data Collection, Preparation & Visualization
-├── 2-link_predictionML/       # Phase 2: Link Prediction & Machine Learning Analysis
-├── 3-simulateur_stress/       # Phase 3: Network Resilience & Stress Simulation
+├── 2-simulateur_stress/       # Phase 2: Network Resilience & Stress Simulation
+├── 3-link_predictionML/       # Phase 3: Link Prediction & Machine Learning Analysis
 └── README.md                  # This file
 ```
 
@@ -43,15 +43,41 @@ backend/
 
 **Technologies**: Python (pandas, networkx, pyvis, arxiv API)
 
+**Execution**: Must be executed first as it generates the base network data required by subsequent phases.
+
 ---
 
-### 2. Link Prediction & Machine Learning (`link_predictionML/`)
+### 2. Resilience Simulation & Stress Testing (`simulateur_stress/`)
 
-**Purpose**: Predicts future research collaborations using machine learning and analyzes predictive features.
+**Purpose**: Simulates network behavior under stress and evaluates resilience to researcher disruptions. This phase must be executed before link prediction to establish baseline network resilience metrics.
+
+**Key Functionality**:
+- Simulate network degradation scenarios
+- Model impact of researcher removal on network connectivity
+- Calculate resilience metrics
+- Identify critical nodes and vulnerabilities
+- Generate degradation curves and reports
+
+**Main Outputs**:
+- `degradation_results.csv` - Results from degradation scenarios
+- `degradation_curves.html` - Visualization of network resilience curves
+- `resilience_report.txt` - Comprehensive resilience analysis
+
+**Input Requirements**: Phase 1 outputs (cleaned network data)
+
+**Technologies**: Python (networkx, simulation algorithms)
+
+**Execution**: Must be executed second, after Phase 1, before link prediction analysis.
+
+---
+
+### 3. Link Prediction & Machine Learning (`link_predictionML/`)
+
+**Purpose**: Predicts future research collaborations using machine learning and analyzes predictive features. This phase builds upon resilience baseline established in Phase 2.
 
 **Key Functionality**:
 - Train ML models to predict future links between researchers
-- Feature engineering based on network topology
+- Feature engineering based on network topology and resilience data
 - Evaluate prediction accuracy and model performance
 - Generate vulnerability scores for predicted links
 - Visualize predicted collaboration networks
@@ -63,40 +89,37 @@ backend/
 - `feature_importance.csv` - Feature importance analysis
 - `predictive_report.txt` - Detailed analysis report
 
+**Input Requirements**: Phase 1 outputs and optional Phase 2 results
+
 **Technologies**: Python (scikit-learn, networkx, machine learning algorithms)
 
----
-
-### 3. Resilience Simulation & Stress Testing (`simulateur_stress/`)
-
-**Purpose**: Simulates network behavior under stress and evaluates resilience to researcher disruptions.
-
-**Key Functionality**:
-- Simulate network degradation scenarios
-- Model impact of researcher removal on network connectivity
-- Calculate resilience metrics
-- Generate degradation curves and reports
-
-**Main Outputs**:
-- `degradation_results.csv` - Results from degradation scenarios
-- `degradation_curves.html` - Visualization of network resilience curves
-- `resilience_report.txt` - Comprehensive resilience analysis
-
-**Technologies**: Python (networkx, simulation algorithms)
+**Execution**: Must be executed last, after Phase 2 stress simulation.
 
 ---
 
 ## Execution Pipeline
 
-The modules are designed to execute sequentially:
+**IMPORTANT**: The modules must be executed in the following order to ensure correct analysis:
 
 ```
-Phase 1: Data Collection & Preparation
+Phase 1: Data Collection & Preparation (data_prep_vis/)
     ↓
-Phase 2: Link Prediction & Analysis
+    Generates: cleaned network, metrics, clusters
     ↓
-Phase 3: Resilience Simulation & Validation
+Phase 2: Resilience Simulation & Stress Testing (simulateur_stress/)
+    ↓
+    Analyzes: network resilience, critical nodes, degradation curves
+    ↓
+Phase 3: Link Prediction & Machine Learning Analysis (link_predictionML/)
+    ↓
+    Generates: future collaboration predictions, ML models, vulnerability scores
 ```
+
+### Rationale for Execution Order
+
+1. **Phase 1 First**: Provides the foundation - clean network data with metrics and communities
+2. **Phase 2 Second**: Establishes network resilience baseline and identifies critical infrastructure
+3. **Phase 3 Third**: Uses Phase 2 insights for more informed link prediction and vulnerability assessment
 
 ### Quick Start
 

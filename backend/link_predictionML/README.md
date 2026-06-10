@@ -1,6 +1,6 @@
 # Link Prediction & Machine Learning Analysis
 
-**Module**: Phase 2 of the Researcher Network Analysis Pipeline  
+**Module**: Phase 3 of the Researcher Network Analysis Pipeline  
 **Purpose**: Predict future research collaborations using machine learning techniques
 
 ---
@@ -34,11 +34,15 @@ link_predictionML/
 
 ### Input Data Requirements
 
-This module depends on outputs from **Phase 1** (Data Preparation):
+This module depends on outputs from **Phase 1** (Data Preparation) and optionally **Phase 2** (Stress Simulation):
 
 **Required Input Files**:
 1. `cleaned_researcher_network_edgelist.csv` - Clean network edge list from data_prep_vis
 2. `metrics_with_clusters.csv` - Centrality metrics and community information
+
+**Optional Input Files**:
+- `degradation_results.csv` - Resilience metrics from Phase 2 (for enhanced vulnerability assessment)
+- `degradation_curves.html` - Network resilience analysis for context
 
 **File Format Example** (Edge List):
 ```csv
@@ -63,6 +67,9 @@ researcher2,researcher3,3
    Copy or verify the following files from `data_prep_vis/`:
    - `cleaned_researcher_network_edgelist.csv`
    - `metrics_with_clusters.csv`
+
+3. **Complete Phase 2 execution** (recommended):
+   Run `simulateur_stress/` to generate resilience analysis that will enhance link prediction accuracy
 
 ### Run the Analysis
 
